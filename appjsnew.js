@@ -4,6 +4,15 @@ var main = function() {
   var weekList = document.getElementById("weekly");
   var button = document.getElementById("add");
 
+  var habit = {
+    this.name = name;
+    this.count = count;
+  }
+
+  var plusButton = {
+
+  }
+
   function adder() {
     if ($("#input").val() !== "") {
       var input = document.getElementById("input").value;
