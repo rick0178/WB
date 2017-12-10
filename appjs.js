@@ -9,7 +9,7 @@ var main = function() {
       var input = document.getElementById("input").value;
       habit(input);
       $("#input").val("");
-      counterLoop();
+
     }
   }
 
@@ -29,6 +29,19 @@ var main = function() {
     plusButton.appendChild(document.createTextNode("+"));
     plusButton.className = "plusButton";
     entry.appendChild(plusButton);
+    for (var i = 0; i < 1; i++) {
+      plusButton.addEventListener('click', function() {
+        count = entry.childNodes[2].innerHTML;
+        count = parseInt(count) + 1;
+        entry.childNodes[2].innerHTML = " " + count + " ";
+      });
+      minButton.addEventListener('click', function minClick(){
+        count = entry.childNodes[2].innerHTML;
+        count = parseInt(count) - 1;
+        entry.childNodes[2].innerHTML = " " + count + " ";
+      });
+    }
+
     var amount = document.getElementById("howOften").value;
     if (amount == "Hourly") {
       hourList.appendChild(entry);
@@ -49,19 +62,7 @@ var main = function() {
     }
   });
 
-function counterLoop(){
-  var plus = document.querySelectorAll(".plusButton");
-  var min = document.querySelectorAll(".minButton");
-  for (var i = 0; i < plus.length; i++) {
-    plus[i].addEventListener('click', function plusClick(){
-      console.log("xD");
-    });
-    min[i].addEventListener('click', function minClick(){
-      var count = $(this).siblings(".counter");
-      console.log(count);
-    });
-  }
-}
+
 
 
 
