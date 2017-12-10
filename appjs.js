@@ -9,7 +9,6 @@ var main = function() {
       var input = document.getElementById("input").value;
       habit(input);
       $("#input").val("");
-
     }
   }
 
@@ -29,6 +28,10 @@ var main = function() {
     plusButton.appendChild(document.createTextNode("+"));
     plusButton.className = "plusButton";
     entry.appendChild(plusButton);
+    var checkbox = document.createElement('input');
+    checkbox.type = "checkbox";
+    checkbox.className = "checkbox";
+    entry.appendChild(checkbox);
     for (var i = 0; i < 1; i++) {
       plusButton.addEventListener('click', function() {
         count = entry.childNodes[2].innerHTML;
@@ -41,7 +44,6 @@ var main = function() {
         entry.childNodes[2].innerHTML = " " + count + " ";
       });
     }
-
     var amount = document.getElementById("howOften").value;
     if (amount == "Hourly") {
       hourList.appendChild(entry);
@@ -56,14 +58,21 @@ var main = function() {
     adder();
   };
 
+
+  $("#deleteButton").on('click', function(){
+    var boxes = document.querySelectorAll(".checkbox")
+    for(i = 0; i<boxes.length; i++){
+      if(boxes[i].checked){
+        boxes[i].parentNode.remove();
+      }
+    }
+  });
+
   $("#input").on("keypress", function() {
     if (event.which === 13) {
       adder.call(this);
     }
   });
-
-
-
 
 
 
