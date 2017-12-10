@@ -50,8 +50,8 @@ var main = function() {
   });
 
 function counterLoop(){
-  var plus = document.getElementsByClassName("plusButton");
-  var min = document.getElementsByClassName("minButton");
+  var plus = document.querySelectorAll(".plusButton");
+  var min = document.querySelectorAll(".minButton");
   for (var i = 0; i < plus.length; i++) {
     plus[i].addEventListener('click', function plusClick(){
       console.log("xD");
