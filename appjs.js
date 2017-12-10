@@ -32,18 +32,31 @@ var main = function() {
     checkbox.type = "checkbox";
     checkbox.className = "checkbox";
     entry.appendChild(checkbox);
-    plusButton.addEventListener('click', function() {
-      count = entry.childNodes[2].innerHTML;
-      count = parseInt(count) + 1;
-      entry.childNodes[2].innerHTML = " " + count + " ";
-      updater();
-    });
-    minButton.addEventListener('click', function (){
-      count = entry.childNodes[2].innerHTML;
-      count = parseInt(count) - 1;
-      entry.childNodes[2].innerHTML = " " + count + " ";
-      updater();
-    });
+      plusButton.addEventListener('click', function plusser(){
+        count = entry.childNodes[2].innerHTML;
+        count = parseInt(count) + 1;
+        entry.childNodes[2].innerHTML = " " + count + " ";
+        updater();
+      });
+      minButton.addEventListener('click', function minner(){
+        count = entry.childNodes[2].innerHTML;
+        count = parseInt(count) - 1;
+        entry.childNodes[2].innerHTML = " " + count + " ";
+        updater();
+      });
+    function updater(){
+      var counts = document.querySelectorAll("#hourly .counter");
+      for(i = 0; i< counts.length; i++){
+        for(j = i + 1; j < counts.length; j++){
+          if(parseInt(counts[i].innerHTML) < parseInt(counts[j].innerHTML) && i !=j){
+            var temp=counts[j].parentNode.innerHTML;
+            counts[j].parentNode.innerHTML = counts[i].parentNode.innerHTML;
+            counts[i].parentNode.innerHTML = temp;
+          }
+        }
+      }
+
+    }
     var amount = document.getElementById("howOften").value;
     if (amount == "Hourly") {
       hourList.appendChild(entry);
@@ -52,6 +65,8 @@ var main = function() {
     } else {
       weekList.appendChild(entry);
     }
+    plusser();
+    minner();
   }
 
   button.onclick = function() {
@@ -67,34 +82,30 @@ var main = function() {
     }
   });
 
+
+
   $("#input").on("keypress", function() {
     if (event.which === 13) {
       adder.call(this);
     }
   });
 
-  function updater(){
-    var counts = document.querySelectorAll("#hourly .counter").text();
-    counts.sort(function(a, b){return b - a});
-    var newOl = [];
-    for(i = 0; i<counts.length; i++){
-      newOl.push(counts[i].parentNode);
-    }
-    var ol = document.getElementById("hourly")
-    while( ol.firstChild ){
-  ol.removeChild(ol.firstChild );
-  ol.append(newOl);
-}
+//  function updater(){
+//    var counts = document.querySelectorAll("#hourly .counter");
+//    counts.sort(function(a, b){return b - a});
+//    var newOl = [];
+//    for(i = 0; i<counts.length; i++){
+//      newOl.push(counts[i].parentNode);
+//    }
+//    var ol = document.getElementById("hourly")
+//    while( ol.firstChild ){
+//  ol.removeChild(ol.firstChild );
+//  ol.append(newOl);
+//}
 
-  }
-
-  //for(i = 0; i< counts.length; i++){
-  //    if(i > 0 && parseInt(counts[i].innerHTML) > parseInt(counts[i - 1].innerHTML)){
-  //      var temp=counts[i - 1].parentNode.innerHTML;
-  //      counts[i - 1].parentNode.innerHTML = counts[i].parentNode.innerHTML;
-  //      counts[i].parentNode.innerHTML = temp;
-  //    }
   //}
+
+
 
 
 
