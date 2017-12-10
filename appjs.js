@@ -14,7 +14,7 @@ var main = function() {
 
   function habit(input) {
     var entry = document.createElement("li");
-    var count = 10;
+    var count = 0;
     var minButton = document.createElement("button");
     minButton.appendChild(document.createTextNode("-"));
     minButton.className = "minButton";
@@ -32,18 +32,18 @@ var main = function() {
     checkbox.type = "checkbox";
     checkbox.className = "checkbox";
     entry.appendChild(checkbox);
-    for (var i = 0; i < 1; i++) {
-      plusButton.addEventListener('click', function() {
-        count = entry.childNodes[2].innerHTML;
-        count = parseInt(count) + 1;
-        entry.childNodes[2].innerHTML = " " + count + " ";
-      });
-      minButton.addEventListener('click', function minClick(){
-        count = entry.childNodes[2].innerHTML;
-        count = parseInt(count) - 1;
-        entry.childNodes[2].innerHTML = " " + count + " ";
-      });
-    }
+    plusButton.addEventListener('click', function() {
+      count = entry.childNodes[2].innerHTML;
+      count = parseInt(count) + 1;
+      entry.childNodes[2].innerHTML = " " + count + " ";
+      updater();
+    });
+    minButton.addEventListener('click', function (){
+      count = entry.childNodes[2].innerHTML;
+      count = parseInt(count) - 1;
+      entry.childNodes[2].innerHTML = " " + count + " ";
+      updater();
+    });
     var amount = document.getElementById("howOften").value;
     if (amount == "Hourly") {
       hourList.appendChild(entry);
@@ -57,7 +57,6 @@ var main = function() {
   button.onclick = function() {
     adder();
   };
-
 
   $("#deleteButton").on('click', function(){
     var boxes = document.querySelectorAll(".checkbox")
@@ -74,6 +73,28 @@ var main = function() {
     }
   });
 
+  function updater(){
+    var counts = document.querySelectorAll("#hourly .counter").text();
+    counts.sort(function(a, b){return b - a});
+    var newOl = [];
+    for(i = 0; i<counts.length; i++){
+      newOl.push(counts[i].parentNode);
+    }
+    var ol = document.getElementById("hourly")
+    while( ol.firstChild ){
+  ol.removeChild(ol.firstChild );
+  ol.append(newOl);
+}
+
+  }
+
+  //for(i = 0; i< counts.length; i++){
+  //    if(i > 0 && parseInt(counts[i].innerHTML) > parseInt(counts[i - 1].innerHTML)){
+  //      var temp=counts[i - 1].parentNode.innerHTML;
+  //      counts[i - 1].parentNode.innerHTML = counts[i].parentNode.innerHTML;
+  //      counts[i].parentNode.innerHTML = temp;
+  //    }
+  //}
 
 
 
