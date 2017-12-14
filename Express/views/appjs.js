@@ -4,19 +4,17 @@ var main = function() {
   var weekList = document.getElementById("weekly");
   var button = document.getElementById("add");
 
-  function habit(input) {
-    var name = document.createElement("span");
-    name.className = "habit";
-    name.appendChild(document.createTextNode(" " + input + " "));
-    return name;
+  function habit(input, number) {
+    var entry = document.createElement("span");
+    entry.className = "habit";
+    entry.appendChild(document.createTextNode(" " + input + " "));
+    this.name = entry;
+    var entryN = document.createElement("strong");
+    entryN.appendChild(document.createTextNode(" " + number + " "));
+    entryN.className = "counter";
+    this.count = entryN;
   }
 
-  function counter() {
-    var count = document.createElement("strong");
-    count.appendChild(document.createTextNode(" " + 0 + " "));
-    count.className = "counter";
-    return count;
-  }
   function adder() {
     if ($("#input").val() !== "") {
       var input = document.getElementById("input").value;
@@ -46,12 +44,20 @@ var main = function() {
     return checkbox;
   }
 
+  function editInput(value) {
+    var entry = document.createElement("input");
+    entry.value = value;
+    entry.className = "editInput";
+    return entry;
+  }
+
   function habitAdder(input) {
     var entry = document.createElement("li");
-
+    var newHabit = new habit(input, 0);
     entry.appendChild(new minButton());
-    entry.appendChild(new habit(input));
-    entry.appendChild(new counter());
+    entry.appendChild(newHabit.name);
+    entry.appendChild(new editInput(input));
+    entry.appendChild(newHabit.count);
     entry.appendChild(new plusButton());
     entry.appendChild(new checkbox());
     var amount = document.getElementById("howOften").value;
@@ -86,17 +92,38 @@ var main = function() {
 
   document.getElementById("lists").addEventListener("click", function(event) {
     if (event.target.className === "minButton") {
-      var count = event.target.parentNode.childNodes[2].innerHTML;
+      var count = event.target.parentNode.childNodes[3].innerHTML;
       count = parseInt(count) - 1;
-      event.target.parentNode.childNodes[2].innerHTML = " " + count + " ";
+      event.target.parentNode.childNodes[3].innerHTML = " " + count + " ";
       updater();
     }
     if (event.target.className === "plusButton") {
-      var count = event.target.parentNode.childNodes[2].innerHTML;
+      var count = event.target.parentNode.childNodes[3].innerHTML;
       count = parseInt(count) + 1;
-      event.target.parentNode.childNodes[2].innerHTML = " " + count + " ";
+      event.target.parentNode.childNodes[3].innerHTML = " " + count + " ";
       updater();
     }
+    if (event.target.className === "habit") {
+      event.target.parentNode.className = "edit";
+      var input = event.target.nextElementSibling;
+      input.focus();
+      input.setSelectionRange(0, input.value.length);
+    }
+
+    function updateItem() {
+      this.previousElementSibling.innerHTML = " " + this.value + " ";
+      this.parentNode.className = "";
+    }
+
+    $(".editInput").on("keypress", function(newEvent) {
+      if (newEvent.which === 13) {
+        updateItem.call(this);
+      }
+    });
+
+    $(".editInput").on("blur", function() {
+      updateItem.call(this);
+    });
   });
 
   function updater() {
@@ -123,6 +150,8 @@ var main = function() {
         }
       }
     }
+
+    $(".habit").on("click", function() {});
   }
 
   //  function updater(){
