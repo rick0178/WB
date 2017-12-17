@@ -111,7 +111,9 @@ var main = function() {
     }
 
     function updateItem() {
-      this.previousElementSibling.innerHTML = " " + this.value + " ";
+      if (this.value != 0) {
+        this.previousElementSibling.innerHTML = " " + this.value + " ";
+      }
       this.parentNode.className = "";
     }
 
@@ -150,8 +152,6 @@ var main = function() {
         }
       }
     }
-
-    $(".habit").on("click", function() {});
   }
 
   //  function updater(){
